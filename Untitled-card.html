@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For You</title>
+
+<style>
+body {
+  margin: 0;
+  height: 100vh;
+  background: #f6f1e7;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: sans-serif;
+  overflow: hidden;
+}
+
+/* Envelope */
+.envelope {
+  position: relative;
+  width: 320px;
+  height: 220px;
+  background: #f3e7d3;
+  border-radius: 8px;
+  box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+  cursor: pointer;
+  perspective: 1000px;
+   overflow: hidden;
+}
+
+/* Flap */
+.flap {
+  position: absolute;
+  width: 100%;
+  height: 120px;
+  background: #eadcc6;
+  top: 0;
+  left: 0;
+  clip-path: polygon(0 0, 50% 100%, 100% 0);
+  transform-origin: top;
+  transition: transform 0.8s ease;
+  z-index: 3;
+}
+
+.open .flap {
+  transform: rotateX(180deg);
+}
+
+/* Card */
+.card {
+  position: absolute;
+  width: 88%;
+  left: 6%;
+  height: 180px;
+  bottom: -200px;
+  background: #ffc0cb;
+  border-radius: 10px;
+  padding: 20px;
+  box-sizing: border-box;
+  transition: bottom 1s ease;
+  z-index: 2;
+  overflow-y: auto;
+}
+
+/* Slide up */
+.open .card {
+  bottom: 20px;
+}
+
+/* Transparent hearts */
+.card::before {
+  content: "♡   ♡   ♡   ♡   ♡   ♡   ♡";
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  color: rgba(255,255,255,0.35);
+  font-size: 24px;
+}
+
+/* Text */
+.message {
+  margin-top: 40px;
+  color: black;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+/* Hint */
+.hint {
+  position: absolute;
+  bottom: -30px;
+  width: 100%;
+  text-align: center;
+  font-size: 13px;
+  color: #a89c8a;
+}
+
+/* Floating hearts */
+.heart {
+  position: absolute;
+  font-size: 18px;
+  color: rgba(255,105,180,0.7);
+  animation: float 4s ease forwards;
+}
+
+@keyframes float {
+  from { transform: translateY(0); opacity: 1; }
+  to { transform: translateY(-300px); opacity: 0; }
+}
+</style>
+</head>
+
+<body>
+
+<div class="envelope" id="envelope">
+  <div class="flap"></div>
+
+  <div class="card">
+    <div class="message">
+      It’s been more than six months since we met, and I’ve honestly loved every moment I’ve spent with you.<br><br>
+
+      Yes, you annoy me sometimes 😉 but I guess its fine.<br><br>
+
+      I’m really grateful to have you in my life. And if I annoy you… just remember, you signed up for this 🫶🏻<br><br>
+
+      Love,<br>
+      Hardee xoxo
+    </div>
+  </div>
+
+  <div class="hint">Tap to open</div>
+</div>
+
+<script>
+const envelope = document.getElementById("envelope");
+
+envelope.addEventListener("click", function() {
+  envelope.classList.toggle("open");
+
+  for (let i = 0; i < 12; i++) {
+    let heart = document.createElement("div");
+    heart.className = "heart";
+    heart.innerHTML = "♥";
+    heart.style.left = (window.innerWidth/2 - 50 + Math.random()*100) + "px";
+    heart.style.bottom = "120px";
+    document.body.appendChild(heart);
+    setTimeout(() => heart.remove(), 4000);
+  }
+});
+</script>
+
+</body>
+</html>
